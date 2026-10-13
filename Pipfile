@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pymysql = "<2.0,>=1.1"
+bcrypt = "<6.0,>=4.1"
+python-dotenv = "<2.0,>=1.0"
+flask = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.14"
