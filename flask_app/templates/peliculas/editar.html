@@ -1,0 +1,3 @@
+<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
+{% extends "base.html" %}{% block title %}Editar película{% endblock %}
+{% block content %}<div class="form-page mx-auto"><a class="back-link" href="{{ url_for('peliculas.ver', pelicula_id=pelicula.id) }}"><i class="bi bi-arrow-left"></i> Volver a la película</a><section class="form-panel mt-3"><div class="mb-4"><p class="eyebrow">ACTUALIZA LA INFORMACIÓN</p><h1 class="h2 fw-bold">Editar Película</h1><p class="text-secondary">Los campos contienen los datos actuales de la película.</p></div><form method="post" novalidate>{% set boton = "Guardar cambios" %}{% include "peliculas/_form.html" %}</form></section></div>{% endblock %}

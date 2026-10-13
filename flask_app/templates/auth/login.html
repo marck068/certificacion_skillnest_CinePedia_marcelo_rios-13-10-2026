@@ -1,0 +1,8 @@
+<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
+{% extends "base.html" %}{% block title %}Inicio de sesión{% endblock %}
+{% block content %}<section class="auth-card mx-auto"><div class="text-center mb-4"><div class="form-icon"><i class="bi bi-person-check"></i></div><h1 class="h3 fw-bold">Inicio de Sesión</h1><p class="text-secondary mb-0">Qué bueno verte de nuevo.</p></div>
+<form method="post" novalidate>
+<div class="mb-3"><label for="email" class="form-label">E-mail</label><input class="form-control" type="email" id="email" name="email" value="{{ email }}" placeholder="correo@ejemplo.com" required></div>
+<div class="mb-3"><label for="password" class="form-label">Contraseña</label><input class="form-control" type="password" id="password" name="password" required minlength="8"></div>
+<button class="btn btn-cine w-100 py-2" type="submit">Iniciar sesión</button></form>
+<p class="text-center mt-4 mb-0 text-secondary">¿No tienes cuenta? <a href="{{ url_for('auth.registro') }}">Regístrate</a></p></section>{% endblock %}

@@ -1,0 +1,11 @@
+<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
+{% extends "base.html" %}{% block title %}Bienvenido{% endblock %}
+{% block content %}
+<section class="welcome-panel text-center mx-auto">
+ <div class="welcome-icon"><i class="bi bi-camera-reels"></i></div>
+ <p class="eyebrow">TU COMUNIDAD DE CINE</p><h1>Bienvenido a <span>CinePedia</span></h1>
+ <p class="lead text-secondary">Descubre películas, comparte tus favoritas y conversa con otros amantes del cine.</p>
+ <div class="d-flex justify-content-center flex-wrap gap-3 mt-4"><a class="btn btn-cine btn-lg" href="{{ url_for('auth.login') }}">Iniciar sesión</a><a class="btn btn-outline-secondary btn-lg" href="{{ url_for('auth.registro') }}">Crear cuenta</a></div>
+ <div class="welcome-features row g-3 mt-4 text-start"><div class="col-md-4"><div class="feature-card"><i class="bi bi-collection-play"></i><strong>Catálogo</strong><span>Guarda y explora películas.</span></div></div><div class="col-md-4"><div class="feature-card"><i class="bi bi-chat-heart"></i><strong>Comunidad</strong><span>Lee y comparte opiniones.</span></div></div><div class="col-md-4"><div class="feature-card"><i class="bi bi-stars"></i><strong>Tu espacio</strong><span>Publica tus descubrimientos.</span></div></div></div>
+</section>
+{% endblock %}
