@@ -1,3 +1,12 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
-{% extends "base.html" %}{% block title %}Nueva película{% endblock %}
-{% block content %}<div class="form-page mx-auto"><a class="back-link" href="{{ url_for('peliculas.inicio') }}"><i class="bi bi-arrow-left"></i> Volver al catálogo</a><section class="form-panel mt-3"><div class="mb-4"><p class="eyebrow">AMPLÍA EL CATÁLOGO</p><h1 class="h2 fw-bold">Nueva Película</h1><p class="text-secondary">Comparte una película con la comunidad.</p></div><form method="post" novalidate>{% set boton = "Guardar película" %}{% include "peliculas/_form.html" %}</form></section></div>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Nueva Película{% endblock %}
+{% block content %}
+<section class="form-box">
+    <h1>Nueva Película</h1>
+    <p>Completa los datos de la película.</p>
+    <form method="post">
+        {% set boton = "Guardar Película" %}
+        {% include "peliculas/_form.html" %}
+    </form>
+</section>
+{% endblock %}

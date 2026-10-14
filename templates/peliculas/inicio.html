@@ -1,9 +1,46 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
-{% extends "base.html" %}{% block title %}Películas{% endblock %}
+{% extends "base.html" %}
+{% block title %}Películas{% endblock %}
 {% block content %}
-<section class="page-heading d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3"><div><p class="eyebrow">EL CATÁLOGO DE LA COMUNIDAD</p><h1>Películas</h1><p class="text-secondary mb-0">Descubre historias y comparte tus recomendaciones.</p></div><a href="{{ url_for('peliculas.nueva') }}" class="btn btn-cine"><i class="bi bi-plus-lg me-1"></i> Nueva película</a></section>
-<form class="search-bar my-4" method="get"><i class="bi bi-search"></i><input class="form-control" name="q" value="{{ q }}" placeholder="Buscar por película o director..." aria-label="Buscar películas"><button class="btn btn-dark" type="submit">Buscar</button>{% if q %}<a class="btn btn-outline-secondary" href="{{ url_for('peliculas.inicio') }}">Limpiar</a>{% endif %}</form>
-{% if peliculas %}<div class="row g-4">{% for pelicula in peliculas %}
-<div class="col-sm-6 col-xl-4"><article class="card movie-card h-100"><div class="movie-art"><i class="bi bi-film"></i><span>CINÉFILO · {{ loop.index }}</span></div><div class="card-body d-flex flex-column"><div class="d-flex justify-content-between align-items-start gap-2"><h2 class="h5 fw-bold">{{ pelicula.nombre }}</h2><span class="year-chip">{{ pelicula.fecha_estreno.strftime('%Y') if pelicula.fecha_estreno else '' }}</span></div><p class="text-secondary small mb-2"><i class="bi bi-camera-reels me-1"></i>{{ pelicula.director }}</p><p class="movie-synopsis">{{ pelicula.sinopsis }}</p><p class="small text-secondary mt-auto mb-3">Agregada por {{ pelicula.creador }}</p><div class="d-flex gap-2"><a class="btn btn-cine flex-grow-1" href="{{ url_for('peliculas.ver', pelicula_id=pelicula.id) }}">Ver película</a>{% if pelicula.usuario_id == session.get('usuario_id') %}<a class="btn btn-outline-secondary" title="Editar" href="{{ url_for('peliculas.editar', pelicula_id=pelicula.id) }}"><i class="bi bi-pencil"></i></a>{% endif %}</div></div></article></div>
-{% endfor %}</div>{% else %}<div class="empty-state text-center"><i class="bi bi-film"></i><h2 class="h4 mt-3">Aún no hay películas</h2><p class="text-secondary">{% if q %}No encontramos resultados para “{{ q }}”.{% else %}Sé la primera persona en agregar una película al catálogo.{% endif %}</p>{% if not q %}<a class="btn btn-cine" href="{{ url_for('peliculas.nueva') }}">Crear primera película</a>{% endif %}</div>{% endif %}
+<div class="heading-line">
+    <h1>Bienvenido, {{ session.get('usuario_nombre') }}</h1>
+    <a class="button" href="{{ url_for('peliculas.nueva') }}">Nueva Película</a>
+</div>
+
+<form class="search-line" method="get">
+    <label for="q">Buscar película:</label>
+    <input id="q" name="q" value="{{ q }}" placeholder="Nombre o director">
+    <button type="submit">Buscar</button>
+    {% if q %}<a href="{{ url_for('peliculas.inicio') }}">Limpiar</a>{% endif %}
+</form>
+
+{% if peliculas %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Director</th>
+            <th>Fecha de Estreno</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pelicula in peliculas %}
+        <tr>
+            <td>{{ pelicula.nombre }}</td>
+            <td>{{ pelicula.director }}</td>
+            <td>{{ pelicula.fecha_estreno.strftime('%d/%m/%Y') if pelicula.fecha_estreno else 'Sin fecha' }}</td>
+            <td>
+                <a href="{{ url_for('peliculas.ver', pelicula_id=pelicula.id) }}">Ver Película</a>
+                {% if pelicula.usuario_id == session.get('usuario_id') %}
+                | <a href="{{ url_for('peliculas.editar', pelicula_id=pelicula.id) }}">Editar</a>
+                | <form class="inline-form" method="post" action="{{ url_for('peliculas.borrar', pelicula_id=pelicula.id) }}" data-confirm="¿Quieres borrar esta película?"><button type="submit">Borrar</button></form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay películas registradas.</p>
+{% endif %}
 {% endblock %}

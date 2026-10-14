@@ -1,10 +1,53 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
-{% extends "base.html" %}{% block title %}{{ pelicula.nombre }}{% endblock %}
-{% block content %}<a class="back-link" href="{{ url_for('peliculas.inicio') }}"><i class="bi bi-arrow-left"></i> Volver al catálogo</a>
-<section class="detail-panel mt-3"><div class="detail-art"><i class="bi bi-film"></i><span>CINEPEDIA ORIGINAL</span></div><div class="detail-content"><p class="eyebrow">FICHA DE PELÍCULA</p><h1>{{ pelicula.nombre }}</h1><p class="text-secondary"><i class="bi bi-camera-reels me-2"></i>{{ pelicula.director }} <span class="mx-2">·</span><i class="bi bi-calendar3 me-1"></i>{{ pelicula.fecha_estreno.strftime('%d/%m/%Y') if pelicula.fecha_estreno else 'Sin fecha' }}</p><hr><h2 class="h5 fw-bold">Sinopsis</h2><p class="synopsis-full">{{ pelicula.sinopsis }}</p><p class="small text-secondary">Publicada por {{ pelicula.creador }}</p>
-{% if pelicula.usuario_id == session.get('usuario_id') %}<div class="d-flex gap-2 flex-wrap mt-3"><a class="btn btn-cine" href="{{ url_for('peliculas.editar', pelicula_id=pelicula.id) }}"><i class="bi bi-pencil me-1"></i> Editar</a><form method="post" action="{{ url_for('peliculas.borrar', pelicula_id=pelicula.id) }}" data-confirm="¿Seguro que quieres eliminar esta película y sus comentarios?"><button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash me-1"></i> Borrar</button></form></div>{% endif %}
-</div></section>
-<section class="comments-section mt-5"><div class="d-flex justify-content-between align-items-center mb-3"><div><p class="eyebrow mb-1">OPINIONES DE LA COMUNIDAD</p><h2 class="h3 fw-bold mb-0">Comentarios <span class="count-pill">{{ comentarios|length }}</span></h2></div></div>
-{% if puede_comentar %}<form class="comment-form mb-4" method="post" action="{{ url_for('comentarios.crear', pelicula_id=pelicula.id) }}"><label for="contenido" class="form-label fw-semibold">Deja tu comentario</label><textarea class="form-control mb-3" id="contenido" name="contenido" rows="3" minlength="3" maxlength="1000" placeholder="¿Qué te pareció esta película?" required></textarea><button class="btn btn-cine" type="submit"><i class="bi bi-send me-1"></i> Publicar comentario</button></form>{% else %}<div class="alert alert-info">Como creador de esta película, no puedes comentar tu propia publicación.</div>{% endif %}
-{% if comentarios %}<div class="comment-list">{% for comentario in comentarios %}<article class="comment-item"><div class="avatar">{{ comentario.autor[0]|upper }}</div><div class="flex-grow-1"><div class="d-flex flex-wrap justify-content-between gap-2"><div><strong>{{ comentario.autor }}</strong><div class="small text-secondary">{{ comentario.created_at.strftime('%d/%m/%Y · %H:%M') if comentario.created_at else '' }}</div></div>{% if comentario.usuario_id == session.get('usuario_id') %}<form method="post" action="{{ url_for('comentarios.borrar', comentario_id=comentario.id) }}" data-confirm="¿Eliminar tu comentario?"><button class="btn btn-sm btn-outline-danger" type="submit">Borrar</button></form>{% endif %}</div><p class="mb-0 mt-2 comment-text">{{ comentario.contenido }}</p></div></article>{% endfor %}</div>{% else %}<div class="empty-comments"><i class="bi bi-chat-square-text"></i><p class="mb-0">Todavía no hay comentarios. ¡Inicia la conversación!</p></div>{% endif %}
-</section>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Ver Película{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('peliculas.inicio') }}">Volver al inicio</a></p>
+
+<section class="simple-box">
+    <h1>{{ pelicula.nombre }}</h1>
+    <p><strong>Publicada por:</strong> {{ pelicula.creador }}</p>
+    <p><strong>Director:</strong> {{ pelicula.director }}</p>
+    <p><strong>Fecha Estreno:</strong> {{ pelicula.fecha_estreno.strftime('%d/%m/%Y') if pelicula.fecha_estreno else 'Sin fecha' }}</p>
+    <h2>Sinopsis</h2>
+    <p class="synopsis">{{ pelicula.sinopsis }}</p>
+
+    {% if pelicula.usuario_id == session.get('usuario_id') %}
+    <div class="button-line">
+        <a class="button" href="{{ url_for('peliculas.editar', pelicula_id=pelicula.id) }}">Editar Película</a>
+        <form method="post" action="{{ url_for('peliculas.borrar', pelicula_id=pelicula.id) }}" data-confirm="¿Seguro que quieres borrar esta película?">
+            <button type="submit">Borrar Película</button>
+        </form>
+    </div>
+    {% endif %}
+</section>
+
+<section class="comments-box">
+    <h2>Comentarios</h2>
+    {% if puede_comentar %}
+    <form method="post" action="{{ url_for('comentarios.crear', pelicula_id=pelicula.id) }}">
+        <label for="contenido">Escribe un comentario:</label>
+        <textarea id="contenido" name="contenido" rows="3" minlength="3" maxlength="1000" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    {% else %}
+    <p>No puedes comentar tu propia película.</p>
+    {% endif %}
+
+    {% if comentarios %}
+        {% for comentario in comentarios %}
+        <article class="comment">
+            <p><strong>{{ comentario.autor }}</strong></p>
+            <p>{{ comentario.contenido }}</p>
+            <small>{{ comentario.created_at.strftime('%d/%m/%Y %H:%M') if comentario.created_at else '' }}</small>
+            {% if comentario.usuario_id == session.get('usuario_id') %}
+            <form method="post" action="{{ url_for('comentarios.borrar', comentario_id=comentario.id) }}" data-confirm="¿Eliminar tu comentario?">
+                <button type="submit">Borrar</button>
+            </form>
+            {% endif %}
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>Todavía no hay comentarios.</p>
+    {% endif %}
+</section>
+{% endblock %}

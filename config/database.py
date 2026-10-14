@@ -13,12 +13,12 @@ except ImportError:
     pass
 
 # Datos para conectarse a MySQL. Si no existe una variable en .env, se usa el valor de ejemplo.
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = int(os.getenv("DB_PORT", "3306"))
-DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = int(os.getenv("DB_PORT"))
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_NAME = os.getenv("DB_NAME", "cinepedia")
-SECRET_KEY = os.getenv("SECRET_KEY", "clave-local-cinepedia")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # Abre una conexión con la base de datos y devuelve el objeto de conexión.

@@ -1,2 +1,9 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
-{% extends "base.html" %}{% block title %}Error {{ codigo }}{% endblock %}{% block content %}<section class="empty-state text-center"><div class="error-code">{{ codigo }}</div><h1 class="h3">Algo salió mal</h1><p class="text-secondary">{{ mensaje }}</p><a class="btn btn-cine" href="{{ url_for('peliculas.inicio') if session.get('usuario_id') else url_for('auth.acceso') }}">Volver a CinePedia</a></section>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Error {{ codigo }}{% endblock %}
+{% block content %}
+<section class="simple-box">
+    <h1>Error {{ codigo }}</h1>
+    <p>{{ mensaje }}</p>
+    <a class="button" href="{{ url_for('peliculas.inicio') if session.get('usuario_id') else url_for('auth.acceso') }}">Volver</a>
+</section>
+{% endblock %}

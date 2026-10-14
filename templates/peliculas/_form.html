@@ -1,7 +1,15 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
+<!-- Formulario compartido para crear y editar películas. -->
+<label for="nombre">Nombre de la Película</label>
+<input id="nombre" name="nombre" value="{{ datos.get('nombre', '') }}" minlength="3" maxlength="150" required>
 
-<div class="mb-3"><label for="nombre" class="form-label">Nombre de la película</label><input class="form-control" id="nombre" name="nombre" value="{{ datos.get('nombre','') }}" minlength="3" maxlength="150" required><div class="form-text">El nombre debe ser único y tener al menos 3 caracteres.</div></div>
-<div class="mb-3"><label for="director" class="form-label">Director</label><input class="form-control" id="director" name="director" value="{{ datos.get('director','') }}" minlength="3" maxlength="120" required></div>
-<div class="mb-3"><label for="fecha_estreno" class="form-label">Fecha de estreno</label><input class="form-control" type="date" id="fecha_estreno" name="fecha_estreno" value="{{ datos.get('fecha_estreno').isoformat() if datos.get('fecha_estreno') and datos.get('fecha_estreno').strftime is defined else datos.get('fecha_estreno','') }}" required></div>
-<div class="mb-4"><label for="sinopsis" class="form-label">Sinopsis</label><textarea class="form-control" id="sinopsis" name="sinopsis" rows="5" minlength="3" maxlength="5000" required>{{ datos.get('sinopsis','') }}</textarea><div class="form-text">Resume la historia en al menos 3 caracteres.</div></div>
-<div class="d-flex flex-wrap gap-2"><button class="btn btn-cine" type="submit">{{ boton }}</button><a class="btn btn-outline-secondary" href="{{ url_for('peliculas.inicio') }}">Cancelar</a></div>
+<label for="director">Director</label>
+<input id="director" name="director" value="{{ datos.get('director', '') }}" minlength="3" maxlength="120" required>
+
+<label for="fecha_estreno">Fecha Estreno</label>
+<input id="fecha_estreno" type="date" name="fecha_estreno" value="{{ datos.get('fecha_estreno').isoformat() if datos.get('fecha_estreno') and datos.get('fecha_estreno').strftime is defined else datos.get('fecha_estreno', '') }}" required>
+
+<label for="sinopsis">Sinopsis</label>
+<textarea id="sinopsis" name="sinopsis" rows="5" minlength="3" maxlength="5000" required>{{ datos.get('sinopsis', '') }}</textarea>
+
+<button type="submit">{{ boton }}</button>
+<a class="button button-light" href="{{ url_for('peliculas.inicio') }}">Cancelar</a>

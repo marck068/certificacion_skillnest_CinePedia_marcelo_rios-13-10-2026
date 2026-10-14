@@ -1,9 +1,26 @@
-<!-- Plantilla HTML: esta página muestra contenido y formularios del sitio CinePedia. -->
-{% extends "base.html" %}{% block title %}Registro{% endblock %}
-{% block content %}<section class="auth-card mx-auto"><div class="text-center mb-4"><div class="form-icon"><i class="bi bi-person-plus"></i></div><h1 class="h3 fw-bold">Crear Cuenta</h1><p class="text-secondary mb-0">Únete a la comunidad CinePedia.</p></div>
-<form method="post" novalidate>
-<div class="row"><div class="col-sm-6 mb-3"><label class="form-label" for="nombre">Nombre</label><input class="form-control" id="nombre" name="nombre" value="{{ datos.get('nombre','') }}" minlength="3" required></div><div class="col-sm-6 mb-3"><label class="form-label" for="apellido">Apellido</label><input class="form-control" id="apellido" name="apellido" value="{{ datos.get('apellido','') }}" minlength="3" required></div></div>
-<div class="mb-3"><label class="form-label" for="email">E-mail</label><input class="form-control" id="email" type="email" name="email" value="{{ datos.get('email','') }}" placeholder="correo@ejemplo.com" required></div>
-<div class="mb-3"><label class="form-label" for="password">Contraseña</label><input class="form-control" id="password" type="password" name="password" minlength="8" required><div class="form-text">Mínimo 8 caracteres.</div></div>
-<div class="mb-4"><label class="form-label" for="confirmar">Confirmar contraseña</label><input class="form-control" id="confirmar" type="password" name="confirmar" minlength="8" required></div>
-<button class="btn btn-cine w-100 py-2" type="submit">Registrarme</button></form><p class="text-center mt-4 mb-0 text-secondary">¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a></p></section>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Registro{% endblock %}
+{% block content %}
+<section class="form-box">
+    <h1>Registro</h1>
+    <form method="post">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" value="{{ datos.get('nombre', '') }}" required>
+
+        <label for="apellido">Apellido</label>
+        <input id="apellido" name="apellido" value="{{ datos.get('apellido', '') }}" required>
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" value="{{ datos.get('email', '') }}" required>
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmar">Confirmar contraseña</label>
+        <input type="password" id="confirmar" name="confirmar" required>
+
+        <button type="submit">Registrar</button>
+    </form>
+    <p>¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a></p>
+</section>
+{% endblock %}
